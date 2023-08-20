@@ -1,0 +1,8 @@
+{
+  "name": "calendar-asst",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/karthikSingireddy/calendar-asst.git",
+  "author": "karthikSingireddy <44452107+karthikSingireddy@users.noreply.github.com>",
+  "license": "MIT"
+}
