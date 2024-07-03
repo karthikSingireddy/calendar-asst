@@ -1,0 +1,17 @@
+{
+  "name": "@calendar-asst/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@nx/js": "19.4.0",
+    "@nx/react": "19.4.0",
+    "@nx/workspace": "19.4.0",
+    "nx": "19.4.0"
+  }
+}
