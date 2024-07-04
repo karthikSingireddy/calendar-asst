@@ -12,4 +12,13 @@ export class UsersService {
   findAll(): Promise<UserDocument[]> {
     return this.userModel.find().exec();
   }
+
+  async create(email: string, password: string): Promise<UserDocument> {
+    const user = new this.userModel({
+      email: email,
+      password: password
+    });
+
+    return await user.save();
+  }
 }
