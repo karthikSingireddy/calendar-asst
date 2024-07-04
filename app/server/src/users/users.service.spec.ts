@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '../schemas/user.schema';
+import { User, UserModelDefinition, UserSchema } from '../schemas/user.schema';
 
 let mongod: MongoMemoryServer;
 
@@ -29,10 +29,7 @@ describe('UsersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         rootMongooseTestModule(),
-        MongooseModule.forFeature([{
-          name: User.name,
-          schema: UserSchema
-        }])
+        MongooseModule.forFeature([UserModelDefinition])
       ],
       providers: [UsersService],
     }).compile();
