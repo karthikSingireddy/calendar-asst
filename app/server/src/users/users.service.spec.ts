@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserModelDefinition, UserSchema } from '../schemas/user.schema';
+import { CreateUserDTO } from '@calendar-asst/types';
 
 let mongod: MongoMemoryServer;
 
@@ -50,13 +51,38 @@ describe('UsersService', () => {
       expect(await service.findAll()).toHaveLength(0);
     });
 
-    it('should create new user', async () => {
-      const user = await service.create('test@gmail.com', 'abcdef');
-      expect(user).toBeDefined();
+    const firstName = 'Milo';
+    const lastName = 'Singireddy';
+    const email = 'milo@singireddy.com';
+    const password = 'abcdef';
+
+    const dto: CreateUserDTO = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    };
+
+    it('should create user in db', async () => {
+      const user = await service.createUser({
+        firstName,
+        lastName,
+        email,
+        password
+      });
+
+      expect(user.firstName).toEqual(firstName);
+      expect(user.lastName).toEqual(lastName);
+      expect(user.email).toEqual(email);
+      expect(user.password).toEqual(password);
     });
 
     it('should validate findAll returns the new user', async () => {
       expect(await service.findAll()).toHaveLength(1);
+    });
+
+    it('should check userExists with email to be true', async () => {
+      expect(await service.userExists(dto.email)).toBe(true);
     });
   })
 

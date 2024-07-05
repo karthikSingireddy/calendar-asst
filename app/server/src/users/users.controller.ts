@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDTO } from '@calendar-asst/types';
 
 @Controller('users')
 export class UsersController {
@@ -14,8 +15,14 @@ export class UsersController {
   }
 
   @Post('/signup')
-  signUp(@Body() body: { name: string }) {
-    console.log(body);
-    return { body };
+  signUp(@Body() userDto: CreateUserDTO) {
+    try {
+      this.userService.createUser(userDto);
+    } catch (e) {
+      if (!(e instanceof HttpException)) {
+        e = new HttpException('Server error', 500);
+      }
+      throw e;
+    }
   }
 }
