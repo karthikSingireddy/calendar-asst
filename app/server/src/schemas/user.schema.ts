@@ -4,6 +4,12 @@ import { HydratedDocument } from 'mongoose';
 @Schema()
 export class User {
   @Prop()
+  firstName: string;
+
+  @Prop()
+  lastName: string;
+
+  @Prop()
   email: string;
 
   @Prop()

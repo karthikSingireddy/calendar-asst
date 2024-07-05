@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import '@mantine/core/styles.css';
 import { Button, MantineProvider } from '@mantine/core';
 import { SignUpPage } from './routes/SignUp.page';
+import { types } from '@calendar-asst/types';
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,6 @@ const router = createBrowserRouter([
     element: <SignUpPage />
   }
 ])
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
