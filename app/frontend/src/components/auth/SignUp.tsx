@@ -8,15 +8,21 @@ import {
   Text,
   Container,
   Group,
-  Button,
+  Button, em
 } from '@mantine/core';
 import { useState } from 'react';
+import AuthAPI from '../../api/auth';
 
 export function SignUp() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  function handleSignUp() {
+    console.log(firstName, lastName, email, password);
+    AuthAPI.signUp(firstName, lastName, email, password);
+  }
 
   return (
     <Container size={420} my={40}>
@@ -53,6 +59,7 @@ export function SignUp() {
           label="Email"
           required
           placeholder="test@gmail.com"
+          type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
           mb='md'
@@ -73,7 +80,7 @@ export function SignUp() {
             Forgot password?
           </Anchor>
         </Group>
-        <Button fullWidth mt="xl">
+        <Button fullWidth mt="xl" onClick={handleSignUp}>
           Sign Up
         </Button>
       </Paper>
