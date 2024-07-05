@@ -1,5 +1,8 @@
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import '@mantine/core/styles.css';
+import { Button, MantineProvider } from '@mantine/core';
+import { SignUpPage } from './routes/SignUp.page';
 
 const router = createBrowserRouter([
   {
@@ -7,8 +10,8 @@ const router = createBrowserRouter([
     element: <p>test</p>
   },
   {
-    path: '/test',
-    element: <p>test path</p>
+    path: '/signup',
+    element: <SignUpPage />
   }
 ])
 
@@ -18,5 +21,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <RouterProvider router={router} />
+  <MantineProvider >
+    <RouterProvider router={router} />
+  </MantineProvider>
 );
