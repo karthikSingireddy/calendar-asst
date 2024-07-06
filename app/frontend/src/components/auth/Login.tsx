@@ -8,23 +8,18 @@ import {
   Text,
   Container,
   Group,
-  Button
+  Button, em
 } from '@mantine/core';
 import { useState } from 'react';
 import AuthAPI from '../../api/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-export function SignUp() {
+export function Login() {
   const navigate = useNavigate();
-
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   function handleSignUp() {
-    console.log(firstName, lastName, email, password);
-    AuthAPI.signUp(firstName, lastName, email, password);
   }
 
   return (
@@ -33,31 +28,11 @@ export function SignUp() {
         Welcome back!
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Already have an account?{' '}
-        <Anchor size="sm" onClick={() => navigate('/login')} component="button">
-          Sign In
-        </Anchor>
+        Don't have an account?{' '}
+        <Anchor size="sm" onClick={() => navigate('/signup')} component="button">Sign Up</Anchor>
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput
-          label="First Name"
-          required
-          placeholder="Milo"
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
-          mb='md'
-        />
-
-        <TextInput
-          label="Last Name"
-          required
-          placeholder="Singireddy"
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
-          mb='md'
-        />
-
         <TextInput
           label="Email"
           required
@@ -84,7 +59,7 @@ export function SignUp() {
           </Anchor>
         </Group>
         <Button fullWidth mt="xl" onClick={handleSignUp}>
-          Sign Up
+          Sign In
         </Button>
       </Paper>
     </Container>
