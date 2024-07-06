@@ -15,9 +15,9 @@ export class UsersController {
   }
 
   @Post('/signup')
-  signUp(@Body() userDto: CreateUserDTO) {
+  async signUp(@Body() userDto: CreateUserDTO) {
     try {
-      this.userService.createUser(userDto);
+      await this.userService.createUser(userDto);
     } catch (e) {
       if (!(e instanceof HttpException)) {
         e = new HttpException('Server error', 500);

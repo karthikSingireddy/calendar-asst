@@ -4,24 +4,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserModelDefinition, UserSchema } from '../schemas/user.schema';
 import { CreateUserDTO } from '@calendar-asst/types';
-
-let mongod: MongoMemoryServer;
-
-const rootMongooseTestModule = (options: MongooseModule = {}) => MongooseModule.forRootAsync({
-  useFactory: async () => {
-    mongod = await MongoMemoryServer.create();
-    return {
-      uri: mongod.getUri(),
-      ...options
-    }
-  }
-});
-
-const closeInMongodConnection = async () => {
-  if (mongod) {
-    await mongod.stop();
-  }
-}
+import { closeInMongodConnection, rootMongooseTestModule } from '../testUtils';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -81,7 +64,7 @@ describe('UsersService', () => {
       expect(await service.findAll()).toHaveLength(1);
     });
 
-    it('should check userExists with email to be true', async () => {
+    it('should validate userExists', async () => {
       expect(await service.userExists(dto.email)).toBe(true);
     });
   })
