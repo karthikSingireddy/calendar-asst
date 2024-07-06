@@ -1,16 +1,14 @@
+import { CreateUserDTO, UserDAO } from '@calendar-asst/types';
+import { post } from './apiUtils';
+import { LoginDTO } from '../../../../lib/types/src/lib/login.dto';
+
 const AuthAPI = {
-  signUp: async function(firstName: string, lastName: string, email: string, password: string) {
-    fetch('/api/users/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        firstName, lastName, email, password
-      })
-    })
-      .then(res => res.json())
-      .then(data => console.log(data));
+  signUp: function (createUserDto: CreateUserDTO): Promise<UserDAO> {
+    return post<CreateUserDTO, UserDAO>('/api/users/signup', createUserDto);
+  },
+
+  login: async function(email: string, password: string) {
+    return post<LoginDTO, UserDAO>('/api/users/login', { email, password });
   }
 }
 

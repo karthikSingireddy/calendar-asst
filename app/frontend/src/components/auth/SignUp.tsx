@@ -23,8 +23,7 @@ export function SignUp() {
   const [password, setPassword] = useState('');
 
   function handleSignUp() {
-    console.log(firstName, lastName, email, password);
-    AuthAPI.signUp(firstName, lastName, email, password);
+    AuthAPI.signUp({ firstName, lastName, email, password });
   }
 
   return (

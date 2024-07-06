@@ -26,7 +26,8 @@ export class UsersService {
       password: userDto.password
     });
 
-    return await user.save();
+    await user.save();
+    return user;
   }
 
   async userExists(email: string): Promise<boolean> {

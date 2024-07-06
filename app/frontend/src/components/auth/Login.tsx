@@ -19,7 +19,8 @@ export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleSignUp() {
+  function handleLogin() {
+    console.log(AuthAPI.login(email, password));
   }
 
   return (
@@ -58,7 +59,7 @@ export function Login() {
             Forgot password?
           </Anchor>
         </Group>
-        <Button fullWidth mt="xl" onClick={handleSignUp}>
+        <Button fullWidth mt="xl" onClick={handleLogin}>
           Sign In
         </Button>
       </Paper>
