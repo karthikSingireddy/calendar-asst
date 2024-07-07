@@ -1,7 +1,8 @@
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 function sendRequest<R>(url: string, method: string, data?: any): Promise<R> {
   return fetch(url, {
     method,
-    // @ts-ignore
+    // @ts-expect-error smth
     headers: {
       'Content-Type': 'application/json',
       'access_token': localStorage.getItem('accessToken') || undefined

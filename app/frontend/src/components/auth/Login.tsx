@@ -8,11 +8,11 @@ import {
   Text,
   Container,
   Group,
-  Button, em
+  Button
 } from '@mantine/core';
 import { useState } from 'react';
 import AuthAPI from '../../api/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function Login() {
   const navigate = useNavigate();

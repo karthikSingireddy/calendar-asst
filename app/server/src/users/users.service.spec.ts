@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserModelDefinition, UserSchema } from '../schemas/user.schema';
+import { UserModelDefinition } from '../schemas/user.schema';
 import { CreateUserDTO } from '@calendar-asst/types';
 import { closeInMongodConnection, rootMongooseTestModule } from '../testUtils';
+import { AuthService } from './auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -15,7 +16,7 @@ describe('UsersService', () => {
         rootMongooseTestModule(),
         MongooseModule.forFeature([UserModelDefinition])
       ],
-      providers: [UsersService],
+      providers: [UsersService, AuthService, JwtService],
     }).compile();
 
     service = module.get<UsersService>(UsersService);

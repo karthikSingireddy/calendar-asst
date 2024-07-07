@@ -1,11 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { closeInMongodConnection, rootMongooseTestModule } from '../testUtils';
-import { UsersModule } from './users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModelDefinition } from '../schemas/user.schema';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from '@calendar-asst/types';
+import { JwtService } from '@nestjs/jwt';
+import { AuthService } from './auth.service';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -17,7 +18,7 @@ describe('UsersController', () => {
         MongooseModule.forFeature([UserModelDefinition])
       ],
       controllers: [UsersController],
-      providers: [UsersService],
+      providers: [UsersService, AuthService,JwtService],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
@@ -35,7 +36,7 @@ describe('UsersController', () => {
   };
 
   it('should create a new user', async () => {
-    const res = await controller.signUp(dto);
+    expect(await controller.signUp(dto)).toBeDefined();
   });
 
   it('should fail when creating a new user with same email', async () => {

@@ -24,7 +24,7 @@ export class UsersController {
        return user.toUserDAO();
     } catch (e) {
       if (!(e instanceof HttpException)) {
-        e = new HttpException('Server error', 500);
+        throw new HttpException('Server error', 500);
       }
       throw e;
     }
