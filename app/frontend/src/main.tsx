@@ -1,16 +1,31 @@
-import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import '@mantine/core/styles.css';
+import { MantineProvider } from '@mantine/core';
+import { SignUpPage } from './routes/SignUp.page';
+import { LoginPage } from './routes/Login.page';
 
-import App from './app/app';
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <p>test</p>
+  },
+  {
+    path: '/signup',
+    element: <SignUpPage />
+  },
+  {
+    path: '/login',
+    element: <LoginPage />
+  }
+])
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>
+  <MantineProvider >
+    <RouterProvider router={router} />
+  </MantineProvider>
 );
