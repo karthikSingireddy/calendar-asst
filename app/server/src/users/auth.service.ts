@@ -2,16 +2,18 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../schemas/user.schema';
 import { Model } from 'mongoose';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<User>
+    @InjectModel(User.name) private userModel: Model<User>,
+    private jwTService: JwtService
   ) {}
 
-  async signIn(email: string, pass: string): Promise<UserDocument> {
+  async signIn(email: string, pass: string): Promise<string> {
     const user = await this.userModel.findOne({
-      email: 'milo@singireddy.com'
+      email: email
     }).exec();
 
     if (!user) {
@@ -20,8 +22,7 @@ export class AuthService {
       throw new UnauthorizedException('Password does not match');
     }
 
-    delete user.password;
-
-    return user;
+    const payload = { email: user.email, sub: user._id };
+    return await this.jwTService.signAsync(payload);
   }
 }

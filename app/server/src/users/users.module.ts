@@ -4,10 +4,16 @@ import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserModelDefinition, UserSchema } from '../schemas/user.schema';
 import { AuthService } from './auth.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([UserModelDefinition])
+    MongooseModule.forFeature([UserModelDefinition]),
+    JwtModule.register({
+      global: true,
+      secret: 'test secret',
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
   controllers: [UsersController],
   providers: [UsersService, AuthService]
