@@ -33,7 +33,6 @@ export class UsersController {
   @Post('/login')
   async login(@Body() loginDto: LoginDTO): Promise<AccessTokenDAO> {
     const token = await this.authService.signIn(loginDto.email, loginDto.password);
-
     return new AccessTokenDAO(token);
   }
 }

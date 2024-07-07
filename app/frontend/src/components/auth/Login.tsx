@@ -19,8 +19,9 @@ export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleLogin() {
-    console.log(AuthAPI.login(email, password));
+  async function handleLogin() {
+    const accessTokenDao = await AuthAPI.login(email, password);
+    localStorage.setItem('accessToken', accessTokenDao.accessToken);
   }
 
   return (

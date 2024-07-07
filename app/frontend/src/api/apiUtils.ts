@@ -1,8 +1,10 @@
 function sendRequest<R>(url: string, method: string, data?: any): Promise<R> {
   return fetch(url, {
     method,
+    // @ts-ignore
     headers: {
       'Content-Type': 'application/json',
+      'access_token': localStorage.getItem('accessToken') || undefined
     },
     body: JSON.stringify(data),
   }).then((res) => res.json());
