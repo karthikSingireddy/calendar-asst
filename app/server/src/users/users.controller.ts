@@ -1,8 +1,8 @@
-import { Body, Controller, Get, HttpException, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Post, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AccessTokenDAO, CreateUserDTO, UserDAO } from '@calendar-asst/types';
+import { AccessTokenDAO, CreateUserDTO, LoginDTO, UserDAO } from '@calendar-asst/types';
 import { AuthService } from './auth.service';
-import { LoginDTO } from '../../../../lib/types/src/lib/login.dto';
+import { AuthGaurd } from './auth.gaurd';
 
 @Controller('users')
 export class UsersController {
@@ -34,5 +34,11 @@ export class UsersController {
   async login(@Body() loginDto: LoginDTO): Promise<AccessTokenDAO> {
     const token = await this.authService.signIn(loginDto.email, loginDto.password);
     return new AccessTokenDAO(token);
+  }
+
+  @UseGuards(AuthGaurd)
+  @Get('/profile')
+  profile(@Req() req) {
+    return req.user;
   }
 }
