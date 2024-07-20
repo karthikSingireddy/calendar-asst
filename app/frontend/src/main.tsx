@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <MantineProvider >
+  <MantineProvider defaultColorScheme='dark'>
     <RouterProvider router={router} />
   </MantineProvider>
 );
