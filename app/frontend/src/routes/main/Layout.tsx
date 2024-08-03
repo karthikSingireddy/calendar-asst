@@ -17,7 +17,6 @@ export default function Layout() {
         breakpoint: 'sm',
         collapsed: { mobile: !opened, desktop: opened }
       }}
-      padding="md"
     >
       <AppShell.Header>
         <Group h="100%" px="md" align="center" justify="space-between">
@@ -42,7 +41,13 @@ export default function Layout() {
             <Skeleton key={index} h={28} mt="sm" animate={false} />
           ))}
       </AppShell.Navbar>
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Main style={{
+        display: 'flex',
+        flexDirection: 'row',
+        maxWidth: '100%'
+      }}>
+        <Outlet />
+      </AppShell.Main>
     </AppShell>
   );
 }
