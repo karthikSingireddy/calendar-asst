@@ -4,11 +4,13 @@ import { AuthGaurd } from '../users/auth.gaurd';
 import { ChatDocument } from '../schemas/chat.schema';
 import { ChatDAO, MessageDAO, MessageDTO } from '@calendar-asst/types';
 import { MessageDocument } from '../schemas/message.schema';
+import { OpenAIService } from '../llm/openai.service';
 
 @Controller('chat')
 export class ChatController {
   constructor(
-    private readonly chatService: ChatService
+    private readonly chatService: ChatService,
+    private readonly openAIService: OpenAIService
   ) {}
 
   @Post()
@@ -23,10 +25,11 @@ export class ChatController {
   @UseGuards(AuthGaurd)
   async newMessage(@Body() messageDto: MessageDTO): Promise<MessageDAO> {
     const message: MessageDocument = await this.chatService.createMessage(messageDto.chatId, messageDto.content, true);
+    const llmResponse = await this.openAIService.getResponse();
     if (message) {
       return {
         chatId: messageDto.chatId,
-        content: messageDto.content.split('').reverse().join(''),
+        content: llmResponse,
         fromUser: false
       };
     } else {

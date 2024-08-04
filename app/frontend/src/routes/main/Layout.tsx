@@ -1,10 +1,8 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { AppShell, Burger, Button, Group, Skeleton, useMantineColorScheme } from '@mantine/core';
-import { Simulate } from 'react-dom/test-utils';
-import toggle = Simulate.toggle;
 import { useDisclosure } from '@mantine/hooks';
 import { IconMoon, IconSun } from '@tabler/icons-react';
-import { createContext, MutableRefObject, useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import ChatAPI from '../../api/chat';
 import { ChatDAO } from '@calendar-asst/types';

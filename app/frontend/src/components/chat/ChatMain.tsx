@@ -1,5 +1,5 @@
 import { ChatInput } from './ChatInput';
-import { ScrollArea, Stack } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { ChatFeed } from './ChatFeed';
 import { useContext } from 'react';
 import { MainViewHeightContext } from '../../routes/main/Layout';
