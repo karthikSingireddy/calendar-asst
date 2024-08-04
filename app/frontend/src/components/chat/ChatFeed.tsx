@@ -1,7 +1,7 @@
 import { ScrollArea, Stack } from '@mantine/core';
 import { ChatMessage } from './ChatMessage';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { IChatMessage, messagesListAtom } from '../../atoms/chat.atoms';
+import { useRecoilState } from 'recoil';
+import { messagesListAtom } from '../../atoms/chat.atoms';
 import { useContext, useEffect } from 'react';
 import { ChatIDContext } from '../../routes/main/Chat.page';
 import ChatAPI from '../../api/chat';
