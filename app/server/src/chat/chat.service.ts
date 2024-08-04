@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Chat, ChatDocument } from '../schemas/chat.schema';
 import { Model } from 'mongoose';
-import { Message } from '../schemas/message.schema';
+import { Message, MessageDocument } from '../schemas/message.schema';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -37,5 +37,23 @@ export class ChatService {
 
     const chats: ChatDocument[] = await this.chatModel.find({ createdBy: user });
     return chats;
+  }
+
+
+  async createMessage(chatId: string, content: string, fromUser: boolean): Promise<MessageDocument> {
+    const chat: ChatDocument = await this.chatModel.findById(chatId);
+    if (!chat) {
+      throw new BadRequestException('Chat does not exist');
+    }
+
+    const message: MessageDocument = new this.messageModel({
+      content,
+      fromUser,
+      chat: chat
+    });
+
+    await message.save();
+
+    return message;
   }
 }

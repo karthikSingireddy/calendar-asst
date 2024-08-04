@@ -10,9 +10,6 @@ export class Chat extends AbstractSchema {
   @Prop()
   description: string;
 
-  @Prop({ type: [MessageSchema]})
-  messages: Message[];
-
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
   createdBy: User;
 

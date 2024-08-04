@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import { Chat } from './chat.schema';
 
 @Schema()
 export class Message {
@@ -8,6 +9,9 @@ export class Message {
 
   @Prop()
   fromUser: boolean;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Chat.name })
+  chat: Chat;
 }
 
 export type MessageDocument = HydratedDocument<Message>;
