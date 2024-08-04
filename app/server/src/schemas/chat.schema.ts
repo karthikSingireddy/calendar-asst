@@ -13,7 +13,7 @@ export class Chat extends AbstractSchema {
   @Prop({ type: [MessageSchema]})
   messages: Message[];
 
-  @Prop({ type: UserSchema })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
   createdBy: User;
 
   toDao(): ChatDAO {

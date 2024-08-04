@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Chat, ChatDocument } from '../schemas/chat.schema';
 import { Model } from 'mongoose';
@@ -16,7 +16,7 @@ export class ChatService {
   async createChat(userId: string): Promise<ChatDocument> {
     const user = await this.userService.findUserById(userId);
     if (!user) {
-      throw new Error('User does not exist');
+      throw new BadRequestException('User does not exist');
     }
 
     const chat = new this.chatModel({
@@ -25,6 +25,17 @@ export class ChatService {
       createdBy: user
     });
 
+    await chat.save();
     return chat;
+  }
+
+  async getChatsByUserId(userId: string): Promise<ChatDocument[]> {
+    const user = await this.userService.findUserById(userId);
+    if (!user) {
+      throw new BadRequestException('User does not exist');
+    }
+
+    const chats: ChatDocument[] = await this.chatModel.find({ createdBy: user });
+    return chats;
   }
 }

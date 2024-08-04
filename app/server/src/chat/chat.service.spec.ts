@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ChatService } from './chat.service';
-import { rootMongooseTestModule } from '../testUtils';
+import { closeInMongodConnection, rootMongooseTestModule } from '../testUtils';
 import { MessageModelDefinition } from '../schemas/message.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ChatModelDefinition } from '../schemas/chat.schema';
@@ -55,5 +55,15 @@ describe('ChatService', () => {
 
     expect(chat.createdBy).toBeDefined();
     expect(chat.createdBy._id).toStrictEqual(user._id);
+  });
+
+  it('should get chats by user id', async () => {
+    const chats = await service.getChatsByUserId(user._id.toString());
+    expect(chats).toHaveLength(1);
+    expect(chats[0].createdBy._id).toStrictEqual(user._id);
+  });
+
+  afterAll(() => {
+    closeInMongodConnection();
   });
 });
