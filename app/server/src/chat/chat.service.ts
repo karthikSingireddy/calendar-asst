@@ -38,7 +38,6 @@ export class ChatService {
     return this.chatModel.find({ createdBy: user });
   }
 
-
   async createMessage(chatId: string, content: string, fromUser: boolean): Promise<MessageDocument> {
     const chat: ChatDocument = await this.chatModel.findById(chatId);
     if (!chat) {
