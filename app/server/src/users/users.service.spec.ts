@@ -68,6 +68,10 @@ describe('UsersService', () => {
     it('should validate userExistsByEmail', async () => {
       expect(await service.userExistsByEmail(dto.email)).toBe(true);
     });
+
+    it('should validate userExistsByEmail is false when it does not exist', async () => {
+      expect(await service.userExistsByEmail('dummyEmail@gmail.com')).toBe(false);
+    });
   })
 
   afterAll(async () => {

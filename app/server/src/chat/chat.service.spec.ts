@@ -13,7 +13,7 @@ describe('ChatService', () => {
   let userService: UsersService;
   let user: UserDocument;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         rootMongooseTestModule(),
@@ -54,6 +54,6 @@ describe('ChatService', () => {
     expect(chat.messages).toHaveLength(0);
 
     expect(chat.createdBy).toBeDefined();
-    expect(chat.createdBy._id).toBe(user._id);
+    expect(chat.createdBy._id).toStrictEqual(user._id);
   });
 });
