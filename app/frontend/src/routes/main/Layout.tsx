@@ -4,10 +4,27 @@ import { Simulate } from 'react-dom/test-utils';
 import toggle = Simulate.toggle;
 import { useDisclosure } from '@mantine/hooks';
 import { IconMoon, IconSun } from '@tabler/icons-react';
+import { createContext, MutableRefObject, useEffect, useRef, useState } from 'react';
+
+export const MainViewHeightContext = createContext(0);
 
 export default function Layout() {
   const [opened, { toggle }] = useDisclosure();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  const mainRef = useRef<HTMLElement>(null);
+  const [mainViewHeight, setMainViewHeight] = useState(0);
+
+  useEffect(() =>{
+    if (mainRef.current) {
+      let height = parseFloat(getComputedStyle(mainRef.current).height);
+      height -= parseFloat(getComputedStyle(mainRef.current).paddingTop);
+      height -= parseFloat(getComputedStyle(mainRef.current).paddingBottom);
+      setMainViewHeight(height);
+    }
+  }, []);
+
+  console.log(mainViewHeight);
 
   return (
     <AppShell
@@ -41,12 +58,18 @@ export default function Layout() {
             <Skeleton key={index} h={28} mt="sm" animate={false} />
           ))}
       </AppShell.Navbar>
-      <AppShell.Main style={{
-        display: 'flex',
-        flexDirection: 'row',
-        maxWidth: '100%'
-      }}>
-        <Outlet />
+      <AppShell.Main
+        ref={mainRef}
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          maxWidth: '100%',
+          overflow: 'hidden'
+        }}
+      >
+        <MainViewHeightContext.Provider value={mainViewHeight}>
+          <Outlet />
+        </MainViewHeightContext.Provider>
       </AppShell.Main>
     </AppShell>
   );
