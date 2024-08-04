@@ -1,25 +1,23 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { AppShell, Burger, Button, Group, Skeleton, useMantineColorScheme } from '@mantine/core';
+import {
+  AppShell,
+  Burger,
+  Group,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { createContext, useEffect, useRef, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import ChatAPI from '../../api/chat';
-import { ChatDAO } from '@calendar-asst/types';
+import { Navbar } from '../../components/navbar/Navbar';
 
 export const MainViewHeightContext = createContext(0);
 
 export default function Layout() {
   const [opened, { toggle }] = useDisclosure();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const navigate = useNavigate();
 
   const mainRef = useRef<HTMLElement>(null);
   const [mainViewHeight, setMainViewHeight] = useState(0);
-
-  const newChatMutation = useMutation<ChatDAO>({
-    mutationFn: ChatAPI.createChat
-  });
 
   useEffect(() =>{
     if (mainRef.current) {
@@ -29,16 +27,6 @@ export default function Layout() {
       setMainViewHeight(height);
     }
   }, []);
-
-  function createNewChat() {
-    newChatMutation.mutateAsync()
-      .then((chat) => {
-        console.log(chat);
-        navigate(`/chat/${chat.id}`);
-      })
-      .catch(err => console.error(err));
-  }
-
 
   return (
     <AppShell
@@ -64,15 +52,11 @@ export default function Layout() {
           </div>
         </Group>
       </AppShell.Header>
+
       <AppShell.Navbar p="md" >
-        Navbar
-        <Button onClick={createNewChat}>new chat placeholder</Button>
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
+        <Navbar />
       </AppShell.Navbar>
+
       <AppShell.Main
         ref={mainRef}
         style={{

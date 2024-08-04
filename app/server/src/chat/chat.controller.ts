@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpException, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { AuthGaurd } from '../users/auth.gaurd';
 import { ChatDocument } from '../schemas/chat.schema';
@@ -12,6 +12,26 @@ export class ChatController {
     private readonly chatService: ChatService,
     private readonly openAIService: OpenAIService
   ) {}
+
+  @Get()
+  @UseGuards(AuthGaurd)
+  async getChats(@Req() req: Request): Promise<ChatDAO[]> {
+    const userId: string = req['user'].sub;
+    const chats: ChatDocument[] = await this.chatService.getChatsByUserId(userId);
+    return chats.map(chat => chat.toDao());
+  }
+
+  @Get('/messages/:chatId')
+  @UseGuards(AuthGaurd)
+  async getMessagesInChat(@Param('chatId') chatId: string): Promise<MessageDAO[]> {
+    const chat = await this.chatService.getChatById(chatId);
+    if (!chat) {
+      throw new BadRequestException('Chat does not exist');
+    }
+
+    const messages = await this.chatService.getMessagesInChat(chatId);
+    return messages.map(msg => msg.toDao());
+  }
 
   @Post()
   @UseGuards(AuthGaurd)

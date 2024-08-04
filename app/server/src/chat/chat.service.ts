@@ -29,6 +29,10 @@ export class ChatService {
     return chat;
   }
 
+  async getChatById(chatId: string): Promise<ChatDocument> {
+    return this.chatModel.findById(chatId);
+  }
+
   async getChatsByUserId(userId: string): Promise<ChatDocument[]> {
     const user = await this.userService.findUserById(userId);
     if (!user) {
@@ -52,5 +56,9 @@ export class ChatService {
 
     await message.save();
     return message;
+  }
+
+  getMessagesInChat(chatId: string): Promise<MessageDocument[]> {
+    return this.messageModel.find({ chat: chatId });
   }
 }

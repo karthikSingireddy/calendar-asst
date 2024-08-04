@@ -16,7 +16,6 @@ export class Chat extends AbstractSchema {
     return new ChatDAO(
       this._id.toString(),
       this.description,
-      this.createdBy.toUserDAO()
     );
   }
 }

@@ -1,10 +1,27 @@
 import { ScrollArea, Stack } from '@mantine/core';
 import { ChatMessage } from './ChatMessage';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { IChatMessage, messagesListAtom } from '../../atoms/chat.atoms';
+import { useContext, useEffect } from 'react';
+import { ChatIDContext } from '../../routes/main/Chat.page';
+import ChatAPI from '../../api/chat';
 
 export function ChatFeed() {
-  const messages: IChatMessage[] = useRecoilValue(messagesListAtom);
+  const [messages, setMessages] = useRecoilState(messagesListAtom);
+  const chatId = useContext(ChatIDContext);
+
+  useEffect(() => {
+    ChatAPI.getMessagesInChat(chatId)
+      .then(messages => {
+        setMessages(messages.map(messageDao => {
+          return {
+            content: messageDao.content,
+            fromUser: messageDao.fromUser
+          }
+        }));
+      })
+      .catch(err => console.error(err));
+  }, [chatId]);
 
   return <ScrollArea>
     <Stack

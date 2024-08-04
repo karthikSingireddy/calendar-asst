@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { Chat } from './chat.schema';
+import { MessageDAO } from '@calendar-asst/types';
 
 @Schema()
 export class Message {
@@ -12,6 +13,14 @@ export class Message {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Chat.name })
   chat: Chat;
+
+  toDao(): MessageDAO {
+    return {
+      chatId: this.chat._id.toString(),
+      content: this.content,
+      fromUser: this.fromUser
+    }
+  }
 }
 
 export type MessageDocument = HydratedDocument<Message>;
