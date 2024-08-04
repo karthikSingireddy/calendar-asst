@@ -19,17 +19,13 @@ export function ChatInput() {
   async function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter' && inputValue.trim().length > 0) {
       try {
+        setMessages(oldMessages => [...oldMessages, { content: inputValue, fromUser: true }]);
+        setInputValue('');
         const responseMessage = await sendMessageMutation.mutateAsync({
           chatId: chatId,
           content: inputValue
         });
-
-        setMessages(oldMessages => [
-          ...oldMessages,
-          { content: inputValue , fromUser: true},
-          { content: responseMessage.content, fromUser: false }
-        ]);
-        setInputValue('');
+        setMessages(oldMessages => [...oldMessages, { content: responseMessage.content, fromUser: false }]);
       } catch(e) {
         console.log(e);
       }
