@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { AppShell, Burger, Group, Skeleton, useMantineColorScheme } from '@mantine/core';
+import { AppShell, Burger, Button, Group, Skeleton, useMantineColorScheme } from '@mantine/core';
 import { Simulate } from 'react-dom/test-utils';
 import toggle = Simulate.toggle;
 import { useDisclosure } from '@mantine/hooks';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { createContext, MutableRefObject, useEffect, useRef, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import ChatAPI from '../../api/chat';
 
 export const MainViewHeightContext = createContext(0);
 
@@ -15,6 +17,10 @@ export default function Layout() {
   const mainRef = useRef<HTMLElement>(null);
   const [mainViewHeight, setMainViewHeight] = useState(0);
 
+  const newChatMutation = useMutation({
+    mutationFn: ChatAPI.createChat
+  });
+
   useEffect(() =>{
     if (mainRef.current) {
       let height = parseFloat(getComputedStyle(mainRef.current).height);
@@ -24,7 +30,10 @@ export default function Layout() {
     }
   }, []);
 
-  console.log(mainViewHeight);
+  function createNewChat() {
+    newChatMutation.mutate();
+  }
+
 
   return (
     <AppShell
@@ -52,6 +61,7 @@ export default function Layout() {
       </AppShell.Header>
       <AppShell.Navbar p="md" >
         Navbar
+        <Button onClick={createNewChat}>new chat placeholder</Button>
         {Array(15)
           .fill(0)
           .map((_, index) => (
