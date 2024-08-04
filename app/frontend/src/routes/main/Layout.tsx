@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { AppShell, Burger, Button, Group, Skeleton, useMantineColorScheme } from '@mantine/core';
 import { Simulate } from 'react-dom/test-utils';
 import toggle = Simulate.toggle;
@@ -7,17 +7,19 @@ import { IconMoon, IconSun } from '@tabler/icons-react';
 import { createContext, MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import ChatAPI from '../../api/chat';
+import { ChatDAO } from '@calendar-asst/types';
 
 export const MainViewHeightContext = createContext(0);
 
 export default function Layout() {
   const [opened, { toggle }] = useDisclosure();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const navigate = useNavigate();
 
   const mainRef = useRef<HTMLElement>(null);
   const [mainViewHeight, setMainViewHeight] = useState(0);
 
-  const newChatMutation = useMutation({
+  const newChatMutation = useMutation<ChatDAO>({
     mutationFn: ChatAPI.createChat
   });
 
@@ -31,7 +33,12 @@ export default function Layout() {
   }, []);
 
   function createNewChat() {
-    newChatMutation.mutate();
+    newChatMutation.mutateAsync()
+      .then((chat) => {
+        console.log(chat);
+        navigate(`/chat/${chat.id}`);
+      })
+      .catch(err => console.error(err));
   }
 
 
