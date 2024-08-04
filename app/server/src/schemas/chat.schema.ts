@@ -3,13 +3,10 @@ import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { Message, MessageSchema } from './message.schema';
 import { ChatDAO } from '@calendar-asst/types';
 import { User, UserSchema } from './user.schema';
-import { randomUUID } from 'crypto';
+import { AbstractSchema } from './abstractSchema';
 
 @Schema()
-export class Chat {
-  @Prop({ default: randomUUID() })
-  _id: MongooseSchema.Types.ObjectId
-
+export class Chat extends AbstractSchema {
   @Prop()
   description: string;
 

@@ -1,14 +1,10 @@
 import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { UserDAO } from '@calendar-asst/types';
-import { randomUUID } from 'crypto';
-import { ObjectId } from 'mongodb'
+import { AbstractSchema } from './abstractSchema';
 
 @Schema()
-export class User {
-  @Prop({ default: () => new ObjectId() })
-  _id: MongooseSchema.Types.ObjectId;
-
+export class User extends AbstractSchema {
   @Prop()
   firstName: string;
 
