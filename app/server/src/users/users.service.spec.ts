@@ -65,8 +65,8 @@ describe('UsersService', () => {
       expect(await service.findAll()).toHaveLength(1);
     });
 
-    it('should validate userExists', async () => {
-      expect(await service.userExists(dto.email)).toBe(true);
+    it('should validate userExistsByEmail', async () => {
+      expect(await service.userExistsByEmail(dto.email)).toBe(true);
     });
   })
 
