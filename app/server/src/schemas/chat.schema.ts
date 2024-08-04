@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { Message, MessageSchema } from './message.schema';
-import { ChatDAO } from '../../../../lib/types/src/lib/chat.dao';
+import { ChatDAO } from '@calendar-asst/types';
 import { User, UserSchema } from './user.schema';
 import { randomUUID } from 'crypto';
 
