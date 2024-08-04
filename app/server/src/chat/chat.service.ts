@@ -35,8 +35,7 @@ export class ChatService {
       throw new BadRequestException('User does not exist');
     }
 
-    const chats: ChatDocument[] = await this.chatModel.find({ createdBy: user });
-    return chats;
+    return this.chatModel.find({ createdBy: user });
   }
 
 
@@ -47,13 +46,12 @@ export class ChatService {
     }
 
     const message: MessageDocument = new this.messageModel({
-      content,
-      fromUser,
+      content: content,
+      fromUser: fromUser,
       chat: chat
     });
 
     await message.save();
-
     return message;
   }
 }
