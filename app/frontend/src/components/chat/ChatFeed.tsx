@@ -19,7 +19,7 @@ export function ChatFeed() {
         <ChatMessage
           key={index}
           message={msg}
-          align={index % 2 === 0 ? 'left' : 'right' }
+          align={msg.fromUser ? 'right' : 'left' }
           lastMessage={index === row.length - 1}
         />
       )}

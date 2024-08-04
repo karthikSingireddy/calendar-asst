@@ -2,8 +2,7 @@ import { Body, Controller, HttpException, Post, Req, UseGuards } from '@nestjs/c
 import { ChatService } from './chat.service';
 import { AuthGaurd } from '../users/auth.gaurd';
 import { ChatDocument } from '../schemas/chat.schema';
-import { ChatDAO } from '@calendar-asst/types';
-import { MessageDTO } from '../../../../lib/types/src/lib/message.dto';
+import { ChatDAO, MessageDAO, MessageDTO } from '@calendar-asst/types';
 import { MessageDocument } from '../schemas/message.schema';
 
 @Controller('chat')
@@ -22,10 +21,14 @@ export class ChatController {
 
   @Post('/message')
   @UseGuards(AuthGaurd)
-  async newMessage(@Body() messageDto: MessageDTO) {
+  async newMessage(@Body() messageDto: MessageDTO): Promise<MessageDAO> {
     const message: MessageDocument = await this.chatService.createMessage(messageDto.chatId, messageDto.content, true);
     if (message) {
-      return {};
+      return {
+        chatId: messageDto.chatId,
+        content: messageDto.content.split('').reverse().join(''),
+        fromUser: false
+      };
     } else {
       throw new HttpException('Failed to create message', 500);
     }
