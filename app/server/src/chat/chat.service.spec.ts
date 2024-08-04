@@ -63,6 +63,20 @@ describe('ChatService', () => {
     expect(chats[0].createdBy._id).toStrictEqual(user._id);
   });
 
+  it('should create a lot of chats', () => {
+    const promises = [];
+    for (let i = 0; i < 100; i++) {
+      promises.push(service.createChat(user._id.toString()));
+    }
+    return Promise.all(promises);
+  });
+
+  it('should get all chats by user id', async () => {
+    const chats = await service.getChatsByUserId(user._id.toString());
+    expect(chats).toHaveLength(101);
+    chats.map(chat=> chat.createdBy._id).forEach(id => expect(id).toStrictEqual(user._id));
+  });
+
   afterAll(() => {
     closeInMongodConnection();
   });
