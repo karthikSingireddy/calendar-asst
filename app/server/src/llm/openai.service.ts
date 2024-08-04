@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
+import { Message } from '../schemas/message.schema';
 
 @Injectable()
 export class OpenAIService {
@@ -7,9 +8,12 @@ export class OpenAIService {
     apiKey: process.env.OPEN_AI_KEY
   });
 
-  async getResponse() {
+  async getResponse(messages: Message[]) {
     const completion = await this.client.chat.completions.create({
-      messages: [{ role: 'user', content: 'Say this is a test' }],
+      messages: messages.map(msg => ({
+        role: msg.fromUser ? 'user' : 'system',
+        content: msg.content
+      })),
       model: 'gpt-3.5-turbo',
     });
 

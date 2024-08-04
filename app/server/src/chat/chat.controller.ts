@@ -3,7 +3,7 @@ import { ChatService } from './chat.service';
 import { AuthGaurd } from '../users/auth.gaurd';
 import { ChatDocument } from '../schemas/chat.schema';
 import { ChatDAO, MessageDAO, MessageDTO } from '@calendar-asst/types';
-import { MessageDocument } from '../schemas/message.schema';
+import { Message, MessageDocument } from '../schemas/message.schema';
 import { OpenAIService } from '../llm/openai.service';
 
 @Controller('chat')
@@ -44,9 +44,13 @@ export class ChatController {
   @Post('/message')
   @UseGuards(AuthGaurd)
   async newMessage(@Body() messageDto: MessageDTO): Promise<MessageDAO> {
-    const message: MessageDocument = await this.chatService.createMessage(messageDto.chatId, messageDto.content, true);
-    const llmResponse = await this.openAIService.getResponse();
-    if (message) {
+    const history: Message[] = await this.chatService.getMessagesInChat(messageDto.chatId);
+    const userMessage: Promise<MessageDocument> = this.chatService.createMessage(messageDto.chatId, messageDto.content, true);
+
+    history.push(new Message(messageDto.content, true));
+    const llmResponse = await this.openAIService.getResponse(history);
+    this.chatService.createMessage(messageDto.chatId, llmResponse, false);
+    if ((await userMessage)) {
       return {
         chatId: messageDto.chatId,
         content: llmResponse,

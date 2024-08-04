@@ -5,6 +5,11 @@ import { MessageDAO } from '@calendar-asst/types';
 
 @Schema()
 export class Message {
+  constructor(content: string, fromUser: boolean) {
+    this.content = content;
+    this.fromUser = fromUser;
+  }
+
   @Prop()
   content: string;
 
