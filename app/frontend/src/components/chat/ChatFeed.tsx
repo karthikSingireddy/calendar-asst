@@ -21,7 +21,7 @@ export function ChatFeed() {
         }));
       })
       .catch(err => console.error(err));
-  }, [chatId]);
+  }, [chatId, setMessages]);
 
   return <ScrollArea>
     <Stack

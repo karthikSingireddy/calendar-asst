@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 
 export const decorators = [
+  // @ts-ignore
   (renderStory: any) => (
     <MantineProvider>
       <MemoryRouter initialEntries={['/']}>

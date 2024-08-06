@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// @ts-ignore
+// @ts-expect-error
 import { Login } from './Login';
 
 const meta: Meta<typeof Login> = {
