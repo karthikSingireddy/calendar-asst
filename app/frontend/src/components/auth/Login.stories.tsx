@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// @ts-expect-error
+// @ts-expect-error idk why this is happening
 import { Login } from './Login';
 
 const meta: Meta<typeof Login> = {

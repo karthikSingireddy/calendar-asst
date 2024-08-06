@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 
 export const decorators = [
-  // @ts-ignore
+  // @ts-expect-error idk why this is happening
   (renderStory: any) => (
     <MantineProvider>
       <MemoryRouter initialEntries={['/']}>
