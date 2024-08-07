@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@calendar-asst/components": ["lib/components/src/index.ts"],
       "@calendar-asst/types": ["lib/types/src/index.ts"]
     }
   },
