@@ -15,7 +15,7 @@ export class UsersService {
   }
 
   async createUser(userDto: CreateUserDTO): Promise<UserDocument> {
-    if ((await this.userExists(userDto.email))) {
+    if ((await this.userExistsByEmail(userDto.email))) {
       throw new BadRequestException(`User with email: ${userDto.email} already exists`);
     }
 
@@ -30,8 +30,12 @@ export class UsersService {
     return user;
   }
 
-  async userExists(email: string): Promise<boolean> {
+  async userExistsByEmail(email: string): Promise<boolean> {
     const userInDb = await this.userModel.findOne({ email: email }).exec();
     return !!userInDb;
+  }
+
+  public findUserById(id: string): Promise<UserDocument> {
+    return this.userModel.findOne({ _id: id });
   }
 }

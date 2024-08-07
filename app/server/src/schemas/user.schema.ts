@@ -1,9 +1,10 @@
 import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { UserDAO } from '@calendar-asst/types';
+import { AbstractSchema } from './abstractSchema';
 
 @Schema()
-export class User {
+export class User extends AbstractSchema {
   @Prop()
   firstName: string;
 
