@@ -9,7 +9,6 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { createContext, useEffect, useRef, useState } from 'react';
 import { Navbar } from '../../components/navbar/Navbar';
-import { Components } from '@calendar-asst/components';
 
 export const MainViewHeightContext = createContext(0);
 
@@ -68,7 +67,6 @@ export default function Layout() {
         }}
       >
         <MainViewHeightContext.Provider value={mainViewHeight}>
-          <Components />
           <Outlet />
         </MainViewHeightContext.Provider>
       </AppShell.Main>
