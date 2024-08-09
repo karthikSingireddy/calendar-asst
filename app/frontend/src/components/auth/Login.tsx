@@ -22,6 +22,7 @@ export function Login() {
   async function handleLogin() {
     const accessTokenDao = await AuthAPI.login(email, password);
     localStorage.setItem('accessToken', accessTokenDao.accessToken);
+    navigate('/');
   }
 
   return (

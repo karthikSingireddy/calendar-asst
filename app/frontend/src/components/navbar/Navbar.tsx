@@ -30,7 +30,7 @@ export function Navbar() {
 
     {chatsQuery.isLoading && <p>loading...</p>}
     <ScrollArea scrollbars='y'>
-      {chatsQuery.isSuccess && chatsQuery.data.map(chat =>
+      {chatsQuery.isSuccess && chatsQuery.data && chatsQuery.data.map(chat =>
         <ChatNavbarItem key={chat.id} chatId={chat.id} description={chat.id + chat.id + chat.id} />
       )}
     </ScrollArea>
