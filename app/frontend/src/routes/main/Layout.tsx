@@ -1,75 +1,42 @@
-import { Outlet } from 'react-router-dom';
-import {
-  AppShell,
-  Burger,
-  Group,
-  useMantineColorScheme,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconMoon, IconSun } from '@tabler/icons-react';
 import { createContext, useEffect, useRef, useState } from 'react';
 import { Navbar } from '../../components/navbar/Navbar';
+import { cn, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@calendar-asst/components';
+import { useToggle } from '../../hooks/toggle';
+import { Outlet } from 'react-router-dom';
 
 export const MainViewHeightContext = createContext(0);
 
 export default function Layout() {
-  const [opened, { toggle }] = useDisclosure();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const [opened, openedState] = useToggle(false);
 
-  const mainRef = useRef<HTMLElement>(null);
-  const [mainViewHeight, setMainViewHeight] = useState(0);
-
-  useEffect(() =>{
-    if (mainRef.current) {
-      let height = parseFloat(getComputedStyle(mainRef.current).height);
-      height -= parseFloat(getComputedStyle(mainRef.current).paddingTop);
-      height -= parseFloat(getComputedStyle(mainRef.current).paddingBottom);
-      setMainViewHeight(height);
-    }
-  }, []);
-
-  return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{
-        width: 300,
-        breakpoint: 'sm',
-        collapsed: { mobile: !opened, desktop: opened }
-      }}
+  return <div className="" style={{ height: '100vh' }}>
+    <ResizablePanelGroup
+      direction="horizontal"
     >
-      <AppShell.Header>
-        <Group h="100%" px="md" align="center" justify="space-between">
-          <Group>
-            <Burger opened={false} onClick={toggle} size="md" lineSize={1.5}/>
-            <p>calendar assist thing</p>
-          </Group>
-
-          <div>
-            { colorScheme === 'dark' ?
-              <IconMoon cursor='pointer' size={26} onClick={toggleColorScheme} />
-            : <IconSun cursor="pointer" size={28} onClick={toggleColorScheme} />
-            }
-          </div>
-        </Group>
-      </AppShell.Header>
-
-      <AppShell.Navbar p="md" >
-        <Navbar />
-      </AppShell.Navbar>
-
-      <AppShell.Main
-        ref={mainRef}
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          maxWidth: '100%',
-          overflow: 'hidden'
-        }}
+      <ResizablePanel
+        collapsible
+        defaultSize={30}
+        minSize={20}
+        maxSize={30}
+        collapsedSize={0}
+        onCollapse={() => openedState.set(false)}
+        className={cn(
+          opened &&
+          "min-w-[50px] transition-all duration-300 ease-in-out"
+        )}
       >
-        <MainViewHeightContext.Provider value={mainViewHeight}>
-          <Outlet />
-        </MainViewHeightContext.Provider>
-      </AppShell.Main>
-    </AppShell>
-  );
+
+        <Navbar />
+      </ResizablePanel>
+
+      <ResizableHandle withHandle />
+
+      <ResizablePanel
+        defaultSize={70}
+        minSize={30}>
+        <Outlet />
+      </ResizablePanel>
+
+    </ResizablePanelGroup>
+  </div>
 }

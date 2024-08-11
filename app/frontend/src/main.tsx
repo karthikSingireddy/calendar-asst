@@ -15,9 +15,7 @@ const queryClient = new QueryClient()
 root.render(
   <QueryClientProvider client={queryClient}>
     <RecoilRoot>
-      <MantineProvider defaultColorScheme='dark'>
-        <RouterProvider router={router} />
-      </MantineProvider>
+      <RouterProvider router={router} />
     </RecoilRoot>
   </QueryClientProvider>
 );
