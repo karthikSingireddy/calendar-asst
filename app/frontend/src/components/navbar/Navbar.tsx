@@ -3,7 +3,7 @@ import { ChatDAO } from '@calendar-asst/types';
 import ChatAPI from '../../api/chat';
 import { useNavigate } from 'react-router-dom';
 import { ChatNavbarItem } from './ChatNavbarItem';
-import { CalendarIcon, ChatBubbleIcon, PlusIcon } from '@radix-ui/react-icons';
+import { CalendarIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Button } from '@calendar-asst/components';
 
 export function Navbar() {
