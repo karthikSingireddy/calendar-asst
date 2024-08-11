@@ -6,3 +6,5 @@ export * from './lib/Input';
 export * from './lib/Toggle';
 export * from './lib/Label';
 export * from './lib/Resizable';
+export * from './lib/Textarea';
+export * from './lib/Tooltip';
