@@ -3,6 +3,7 @@ import { SignUpPage } from './routes/SignUp.page';
 import { LoginPage } from './routes/Login.page';
 import MainLayout from './routes/main/Layout';
 import { ChatPage } from './routes/main/Chat.page';
+import { GAPIRedirectPage } from './routes/GAPIRedirect.page';
 
 export default createBrowserRouter([
   {
@@ -22,5 +23,9 @@ export default createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />
+  },
+  {
+    path: '/gapi-token',
+    element: <GAPIRedirectPage />
   }
 ]);
