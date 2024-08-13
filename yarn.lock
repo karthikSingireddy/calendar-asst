@@ -2347,7 +2347,7 @@
     enquirer "~2.3.6"
     tsconfig-paths "^4.1.2"
 
-"@nx/web@19.4.0":
+"@nx/web@^19.4.0", "@nx/web@19.4.0":
   version "19.4.0"
   resolved "https://registry.npmjs.org/@nx/web/-/web-19.4.0.tgz"
   integrity sha512-xe0cCcv0Un1PeuDt837eXTRrqCQiAoncmxgC2LVdjFuiBAPCmuYUjU38EfIOdXw+xtLisJydnGCb1ZIe6R+4GA==
