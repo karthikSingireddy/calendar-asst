@@ -3,12 +3,14 @@ import { UsersService } from './users.service';
 import { AccessTokenDAO, CreateUserDTO, LoginDTO, UserDAO } from '@calendar-asst/types';
 import { AuthService } from './auth.service';
 import { AuthGaurd } from './auth.gaurd';
+import { GoogleOAuthService } from './googleOAuth.service';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly userService: UsersService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly googleOAuthService: GoogleOAuthService
   ) {}
 
 
@@ -41,4 +43,11 @@ export class UsersController {
   profile(@Req() req) {
     return req.user;
   }
+
+  @Get('/gapi')
+  googleOAuth() {
+    return { msg: this.googleOAuthService.generateAuthUrl() };
+  }
 }
+
+
