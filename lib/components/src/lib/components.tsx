@@ -1,5 +1,3 @@
-import styles from './components.module.less';
-
 export function Components() {
   return (
     <div className='bg-gray-50'>
