@@ -32,7 +32,7 @@ export function Navbar() {
         <CalendarIcon className="h-6 w-6" />
         <span className="truncate">AI Chatbot</span>
       </div>
-      <Button variant="ghost" size="icon">
+      <Button variant="ghost" size="icon" onClick={createNewChat}>
         <PlusIcon className="h-4 w-4" />
         <span className="sr-only">New Conversation</span>
       </Button>
