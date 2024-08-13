@@ -1,4 +1,3 @@
-import { ScrollArea, Stack } from '@mantine/core';
 import { ChatMessage } from './ChatMessage';
 import { useRecoilState } from 'recoil';
 import { messagesListAtom } from '../../atoms/chat.atoms';
@@ -33,24 +32,4 @@ export function ChatFeed() {
       />
     )}
   </div>
-
-  // return <ScrollArea>
-  //   <Stack
-  //     h="80%"
-  //     mih="80%"
-  //     justify="flex-end"
-  //     style={{
-  //       flexGrow: 2,
-  //     }}
-  //   >
-  //     {messages.map((msg, index, row) =>
-  //       <ChatMessage
-  //         key={index}
-  //         message={msg}
-  //         align={msg.fromUser ? 'right' : 'left' }
-  //         lastMessage={index === row.length - 1}
-  //       />
-  //     )}
-  //   </Stack>
-  // </ScrollArea>
 }
