@@ -15,9 +15,9 @@ export default function Layout() {
     >
       <ResizablePanel
         collapsible
-        defaultSize={30}
-        minSize={20}
-        maxSize={30}
+        defaultSize={15}
+        minSize={10}
+        maxSize={20}
         collapsedSize={0}
         onCollapse={() => openedState.set(false)}
         className={cn(
@@ -32,7 +32,7 @@ export default function Layout() {
       <ResizableHandle withHandle />
 
       <ResizablePanel
-        defaultSize={70}
+        defaultSize={80}
         minSize={30}>
         <Outlet />
       </ResizablePanel>
