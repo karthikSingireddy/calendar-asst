@@ -1,6 +1,6 @@
 import { IChatMessage } from '../../atoms/chat.atoms';
-import { Group, Paper, Text, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { useEffect, useRef } from 'react';
+import { cn } from '@calendar-asst/components';
 
 interface ChatMessageProps {
   message: IChatMessage;
@@ -8,13 +8,27 @@ interface ChatMessageProps {
   lastMessage: boolean;
 }
 
-export function ChatMessage(props: ChatMessageProps) {
-  const theme = useMantineTheme();
-  const { colorScheme } = useMantineColorScheme();
-  const ref = useRef<HTMLDivElement>(null);
+interface MessageStyles {
+  justify: string;
+  backgroundColor: string;
+  textColor: string;
+}
 
-  const backgroundColor = colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
-  const justifyContent = props.align === 'left' ? 'flex-start' : 'flex-end';
+const UserMessageStyles: MessageStyles = {
+  justify: 'justify-end',
+  backgroundColor: 'bg-primary',
+  textColor: 'text-primary-foreground',
+}
+
+const AIMessageStyles: MessageStyles = {
+  justify: 'justify-start',
+  backgroundColor: 'bg-secondary',
+  textColor: 'text-primary-background',
+}
+
+export function ChatMessage(props: ChatMessageProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const styles = props.align === 'left' ? AIMessageStyles : UserMessageStyles;
 
   useEffect(() => {
     if (props.lastMessage && ref.current) {
@@ -22,16 +36,9 @@ export function ChatMessage(props: ChatMessageProps) {
     }
   }, [props.lastMessage]);
 
-  return (
-      <Group
-        w='100%'
-        justify={justifyContent}
-        p='0px 10px'
-        ref={ref}
-      >
-        <Paper radius="md" m={5} maw='65%' style={{ backgroundColor }}>
-          <Text p={10}>{props.message.content}</Text>
-        </Paper>
-      </Group>
-  );
+  return <div ref={ref} className={cn('flex flex-start', styles.justify)}>
+    <div className={cn("rounded-lg p-4 text-sm text-primary m-2", styles.backgroundColor, styles.textColor)}>
+      {props.message.content}
+    </div>
+  </div>
 }
