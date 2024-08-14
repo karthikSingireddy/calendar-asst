@@ -17,6 +17,9 @@ export class User extends AbstractSchema {
   @Prop()
   password: string;
 
+  @Prop()
+  googleAuthCode: string;
+
   toUserDAO(): UserDAO {
     return new UserDAO(
       this.firstName,

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpException, Post, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AccessTokenDAO, CreateUserDTO, LoginDTO, UserDAO } from '@calendar-asst/types';
+import { AccessTokenDAO, CreateUserDTO, GapiCodeDTO, LoginDTO, UserDAO } from '@calendar-asst/types';
 import { AuthService } from './auth.service';
 import { AuthGaurd } from './auth.gaurd';
 import { GoogleOAuthService } from './googleOAuth.service';
@@ -12,7 +12,6 @@ export class UsersController {
     private readonly authService: AuthService,
     private readonly googleOAuthService: GoogleOAuthService
   ) {}
-
 
   @Get()
   test() {
@@ -47,6 +46,14 @@ export class UsersController {
   @Get('/gapi')
   googleOAuth() {
     return { msg: this.googleOAuthService.generateAuthUrl() };
+  }
+
+  @UseGuards(AuthGaurd)
+  @Post('/gapi-token')
+  async setGoogleAuthToke(@Req() req: Request, @Body() gapiCodeDto: GapiCodeDTO) {
+    const userId = req['user'].sub;
+    const user = await this.userService.setGoogleAuthCode(userId, gapiCodeDto.code);
+    return user.toUserDAO();
   }
 }
 

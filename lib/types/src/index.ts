@@ -6,3 +6,4 @@ export * from './lib/accessToken.dao';
 export * from './lib/chat.dao'
 export * from './lib/message.dao';
 export * from './lib/message.dto';
+export * from './lib/gapi-code.dto';
